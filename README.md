@@ -22,7 +22,7 @@ There is no installer. Just copy the whole folder.
 2. On each PC, double-click `build.bat` → this creates `MouseSwitch.exe`.
    - It uses the compiler that already ships with Windows, so there is nothing extra to install.
    - If an error occurs, copy the message shown in the window as-is and report it.
-3. Right-click `설치_방화벽+자동시작.bat` (install firewall rules + autostart) → Run as administrator.
+3. Right-click `install_firewall_autostart.bat` → Run as administrator.
    - It opens the firewall ports (24800/24801) and registers the app to start automatically at login with administrator rights.
    - Administrator rights are needed for the app to work properly over game windows as well. If you skip this step, button/key input may not work in some programs.
 
