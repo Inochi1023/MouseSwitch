@@ -10,17 +10,17 @@ if not exist "%CSC%" (
 )
 if not exist "%CSC%" (
   echo.
-  echo [오류] 윈도우에 내장된 .NET Framework 4 컴파일러를 찾을 수 없습니다.
-  echo        Windows 10/11 이라면 보통 그냥 있습니다. 윈도우 업데이트를 한 번 해보세요.
+  echo [ERROR] The .NET Framework 4 compiler built into Windows was not found.
+  echo         It is normally present on Windows 10/11. Try running Windows Update once.
   echo.
   pause
   exit /b 1
 )
 
-echo 실행 중이면 먼저 종료합니다...
+echo Closing MouseSwitch first if it is running...
 taskkill /IM MouseSwitch.exe /F >nul 2>&1
 
-echo 컴파일 중...
+echo Compiling...
 "%CSC%" /nologo /target:winexe /platform:%PLAT% /optimize+ /codepage:65001 ^
   /out:MouseSwitch.exe /win32manifest:app.manifest ^
   /r:System.dll /r:System.Core.dll /r:System.Drawing.dll ^
@@ -29,17 +29,17 @@ echo 컴파일 중...
 
 if errorlevel 1 (
   echo.
-  echo [실패] 위의 오류 메시지를 그대로 복사해서 알려주세요.
+  echo [FAILED] Please copy the error messages above as-is and report them.
   echo.
   pause
   exit /b 1
 )
 
 echo.
-echo [완료] MouseSwitch.exe 가 만들어졌습니다.
+echo [DONE] MouseSwitch.exe has been created.
 
 set "SAC=0"
 for /f "tokens=3" %%v in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy" /v VerifiedAndReputablePolicyState 2^>nul ^| find "0x"') do set "SAC=%%v"
-if /i "%SAC%"=="0x1" echo [주의] 스마트 앱 컨트롤이 켜져 있어서 이 exe 는 실행이 차단됩니다. 자동 실행도 안 됩니다.
+if /i "%SAC%"=="0x1" echo [WARNING] Smart App Control is turned on, so this exe will be blocked from running. It will not start automatically either.
 echo.
 pause
